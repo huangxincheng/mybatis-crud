@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.limaila.dept.mapper.DeptMapper">
+
+    <insert id="addDept" parameterType="com.limaila.dept.entity.Dept"
+            useGeneratedKeys="true" keyProperty="deptNo">
+        insert into dept(dept_name,dept_create_time)
+        values (#{deptName}, #{deptCreateTime})
+    </insert>
+
+    <update id="updateDept" parameterType="com.limaila.dept.entity.Dept">
+          update dept set dept_name = #{deptName}, dept_create_time = #{deptCreateTime}
+          where dept_no = #{deptNo}
+    </update>
+
+    <delete id="deleteDept" parameterType="java.lang.Integer">
+        delete from dept where dept_no = #{deptNo}
+    </delete>
+
+    <select id="getOneDept" parameterType="java.lang.Integer" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_no = #{deptNo}
+    </select>
+
+    <select id="getAllDept" parameterType="java.lang.String" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_name like #{deptName}
+    </select>
+
+    <!-- 如果resultType为map 只能返回null or one-->
+   <select id="getAllObjectMap" parameterType="java.lang.String" resultType="map">
+        select * from dept where dept_name like #{deptName}
+   </select>
+
+    <select id="getAllDeptMap" parameterType="java.lang.String" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_name like #{deptName}
+    </select>
+
+    <select id="getDeptArray" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_no in
+        <foreach collection="deptNos" open="(" close=")" item="deptNo" separator=",">
+            #{deptNo}
+        </foreach>
+    </select>
+
+    <select id="getDeptList" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_no in
+        <foreach collection="deptNos" open="(" close=")" item="deptNo" separator=",">
+            #{deptNo}
+        </foreach>
+    </select>
+
+    <select id="getDeptParams" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_no = #{deptNo} and dept_name = #{deptName}
+    </select>
+
+    <select id="getDeptMap" resultType="com.limaila.dept.entity.Dept">
+        select * from dept where dept_no = #{deptNo} and dept_name = #{deptName}
+    </select>
+
+    <!-- 级联查询使用懒加载 -->
+    <resultMap id="baseMap" type="com.limaila.dept.entity.Dept">
+        <id property="deptNo" column="dept_no"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="deptCreateTime" column="dept_create_time"/>
+        <!-- 可以单独设置 fetchType 如果为lazy 懒加载， 如果为eager则全部加载-->
+        <collection property="emps"
+                    ofType="com.limaila.emp.entity.Emp"
+                    select="com.limaila.emp.mapper.EmpMapper.seleltByDid"
+                    column="dept_no">
+            <id property="empNo" column="emp_no"/>
+            <result property="empName" column="emp_name"/>
+            <result property="empAge" column="emp_age"/>
+            <result property="empSex" column="emp_sex"/>
+            <result property="did" column="did"/>
+        </collection>
+    </resultMap>
+
+    <select id="getDeptEmps" resultMap="baseMap">
+        select * from dept where dept_no = #{deptNo}
+    </select>
+
+</mapper>
