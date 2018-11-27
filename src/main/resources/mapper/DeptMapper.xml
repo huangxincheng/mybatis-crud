@@ -66,11 +66,11 @@
                     ofType="com.limaila.emp.entity.Emp"
                     select="com.limaila.emp.mapper.EmpMapper.seleltByDid"
                     column="dept_no">
-            <id property="empNo" column="emp_no"/>
+         <!--  <id property="empNo" column="emp_no"/>
             <result property="empName" column="emp_name"/>
             <result property="empAge" column="emp_age"/>
             <result property="empSex" column="emp_sex"/>
-            <result property="did" column="did"/>
+            <result property="did" column="did"/>-->
         </collection>
     </resultMap>
 

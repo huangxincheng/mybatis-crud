@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * Author: huangxincheng
  * <p>
@@ -27,5 +29,23 @@ public class EmpTest {
         Emp empDept = empMapper.getEmpDept(1);
         log.info("========================" + empDept.getEmpName());
         log.info("=======================" + empDept.getDept());
+    }
+
+    @Test
+    public void testSelectWhere() {
+        Emp emp = new Emp();
+        emp.setEmpNo(2);
+        emp.setEmpName("emp1");
+        List<Emp> emps = empMapper.selectWhere(emp);
+        log.info("============================= emps " + emps);
+    }
+
+    @Test
+    public void testSelectChoose() {
+        Emp emp = new Emp();
+        emp.setEmpNo(2);
+        emp.setEmpName("xx");
+        List<Emp> emps = empMapper.selectChoose(emp);
+        log.info("============================= emps " + emps);
     }
 }

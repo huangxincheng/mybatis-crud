@@ -10,6 +10,63 @@
         select * from emp where emp_no = #{empNo}
     </select>
 
+    <select id="selectWhere" resultType="com.limaila.emp.entity.Emp" parameterType="com.limaila.emp.entity.Emp">
+        select * from emp
+        <where>
+            <if test="empNo != null">
+                and emp_no = #{empNo}
+            </if>
+            <if test="empSex != null">
+                and emp_sex = #{empSex}
+            </if>
+            <if test="empAge != null">
+                and emp_age = #{empAge}
+            </if>
+            <if test="empName != null and empName != &quot;&quot;">
+                and emp_name like #{empName}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectChoose" resultType="com.limaila.emp.entity.Emp" parameterType="com.limaila.emp.entity.Emp">
+        select * from emp
+        <where>
+            <choose>
+              <when test="empNo != null">
+                  emp_no = #{empNo}
+              </when>
+              <when test="empName != null">
+                  emp_name = #{empName}
+              </when>
+              <when test="empAge != null">
+                  emp_age = #{empAge}
+              </when>
+              <when test="empSex != null">
+                  emp_sex = #{empSex}
+              </when>
+              <otherwise>
+                  1 = 1
+              </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <update id="updateSet" parameterType="com.limaila.emp.entity.Emp">
+        update emp
+        <set>
+            <if test="empName != null">
+                emp_name = #{empName},
+            </if>
+            <if test="empSex != null">
+                emp_sex = #{empSex},
+            </if>
+            <if test="empAge != null">
+                emp_age = #{empAge},
+            </if>
+        </set>
+        where emp_no = #{empNo}
+    </update>
+
     <resultMap id="baseMap" type="com.limaila.emp.entity.Emp">
         <id property="empNo" column="emp_no"/>
         <result property="empName" column="emp_name"/>

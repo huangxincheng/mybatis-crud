@@ -14,4 +14,10 @@ public interface EmpMapper {
     List<Emp> seleltByDid(Integer did);
 
     Emp getEmpDept(Integer empNo);
+
+    List<Emp> selectWhere(Emp emp);
+
+    List<Emp> selectChoose(Emp emp);
+
+    int updateSet(Emp emp);
 }
