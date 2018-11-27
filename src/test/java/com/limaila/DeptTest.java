@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.limaila.dept.entity.Dept;
 import com.limaila.dept.mapper.DeptMapper;
+import com.limaila.emp.mapper.EmpMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

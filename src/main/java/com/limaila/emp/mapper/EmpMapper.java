@@ -12,4 +12,6 @@ import java.util.List;
 public interface EmpMapper {
 
     List<Emp> seleltByDid(Integer did);
+
+    Emp getEmpDept(Integer empNo);
 }

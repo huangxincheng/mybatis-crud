@@ -5,4 +5,20 @@
     <select id="seleltByDid" resultType="com.limaila.emp.entity.Emp" parameterType="java.lang.Integer">
         select * from  emp where did = #{did}
     </select>
+
+    <select id="getEmpDept" resultMap="baseMap" parameterType="java.lang.Integer">
+        select * from emp where emp_no = #{empNo}
+    </select>
+
+    <resultMap id="baseMap" type="com.limaila.emp.entity.Emp">
+        <id property="empNo" column="emp_no"/>
+        <result property="empName" column="emp_name"/>
+        <result property="empSex" column="emp_sex"/>
+        <result property="empAge" column="emp_age"/>
+        <result property="did" column="did"/>
+        <association property="dept"
+                     select="com.limaila.dept.mapper.DeptMapper.getOneDept"
+                     column="did"
+        />
+    </resultMap>
 </mapper>
