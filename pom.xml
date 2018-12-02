@@ -6,8 +6,8 @@
 
     <groupId>com.limaila</groupId>
     <artifactId>mybatis-crud</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
+    <!--<version>1.1-SNAPSHOT</version>-->
+    <version>1.2-RELEASE</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,6 +15,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <spring.boot.version>1.5.9.RELEASE</spring.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -22,7 +23,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.5.9.RELEASE</version>
+                <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -100,11 +101,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
+                <version>${spring.boot.version}</version>
+               <configuration>
                     <mainClass>com.limaila.CrudApplication</mainClass>
                     <fork>true</fork>
                 </configuration>
-                <executions>
+               <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
@@ -124,5 +126,19 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- 发布 -->
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <name>release resp</name>
+            <url>http://www.limaila.com:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot</id>
+            <name>snapshot resp</name>
+            <url>http://www.limaila.com:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
