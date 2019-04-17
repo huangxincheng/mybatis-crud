@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.limaila.product.mapper.ProductSkuMapper">
+
+    <resultMap id="baseMap" type="com.limaila.product.entity.ProductSku">
+        <id property="id" column="id"/>
+        <result property="extra_info" column="extra_info"/>
+        <association property="productSkuGroup" resultMap="com.limaila.product.mapper.ProductSkuGroupMapper.baseMap"/>
+    </resultMap>
+
+    <resultMap id="base2Map" type="com.limaila.product.entity.ProductSku">
+        <id property="id" column="id"/>
+        <result property="extra_info" column="extra_info"/>
+        <association property="productSkuGroup" select="com.limaila.product.mapper.ProductSkuGroupMapper.getProductGroup" column="sku_group_id"/>
+    </resultMap>
+
+    
+    <select id="getProductSkuJoinTable" resultMap="baseMap">
+        select a.id,a.extra_info,a.sku_group_id,b.title
+        from product_sku a,product_sku_group b
+        where a.id = #{id}
+        and a.sku_group_id = b.id
+    </select>
+
+    <select id="getProductSkuLazySQL" resultMap="base2Map">
+        select * from product_sku
+        where id = #{id}
+    </select>
+</mapper>
